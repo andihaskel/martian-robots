@@ -21,12 +21,15 @@ export const martianRobots = (
   currentY = parseInt(initialPosition.split(' ')[1], 10);
   currentOrientation = initialPosition.split(' ')[2];
 
-  console.log('X: ', currentX);
-  console.log('Y: ', currentY);
-  console.log('currentOrientation: ', currentOrientation);
+  if (
+    currentOrientation == null ||
+    currentX == null ||
+    currentY == null
+  ) {
+    throw new Error('Invalid initial position input');
+  }
 
   for (let instruction of instructions.split('')) {
-    console.log('INSTRUCTION', instruction);
     switch (instruction) {
       case 'R':
       case 'L':
@@ -34,7 +37,6 @@ export const martianRobots = (
           currentOrientation,
           instruction,
         );
-        console.log('ORIENTATE', currentOrientation);
         break;
       case 'F':
         if (
@@ -45,28 +47,21 @@ export const martianRobots = (
             currentOrientation,
           )
         ) {
-          console.log('FALL FROM MARS');
           if (!hasScent(currentX, currentY, scentList)) {
             scentList.push({ x: currentX, y: currentY });
             currentOrientation = 'LOST';
             stopReadingInstructions = true;
-            console.log('NOT HAVE SCENT');
           }
         } else {
-          console.log('DONT FALL FROM MARS');
           const coordinates = getMovementCoordinates(
             currentX,
             currentY,
             currentOrientation,
           );
-          currentX = coordinates.x;
-          currentY = coordinates.y;
-          console.log('NEW COORDINATES: ', coordinates);
-          console.log('X: ', currentX);
-          console.log('Y: ', currentY);
+          currentX = coordinates?.x;
+          currentY = coordinates?.y;
         }
         break;
-      // console.log(`x: ${currentX} y: ${currentY}`);
     }
     if (stopReadingInstructions) break;
   }
@@ -76,6 +71,5 @@ export const martianRobots = (
   return `X: ${currentX} Y: ${currentY} orientation ${currentOrientation}`;
 };
 
-martianRobots({ x: 5, y: 3 }, '1 1 E', 'RFRFRFRF');
-martianRobots({ x: 5, y: 3 }, '3 2 N', 'FRRFLLFFRRFLL');
-martianRobots({ x: 5, y: 3 }, '0 3 W', 'LLFFFLFLFL');
+martianRobots({ x: 5, y: 3 }, '4 2 E', 'FFFF');
+// martianRobots({ x: 5, y: 3 }, '4 2 E', 'FFFLFLF');

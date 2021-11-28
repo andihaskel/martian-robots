@@ -1,5 +1,16 @@
 import { Coordinates } from './interfaces';
 
+// type Orientation = 'R' | 'L';
+
+// type IOrientationMapper = {
+//   [key in Orientation]?: {
+//     N: string;
+//     E: string;
+//     S: string;
+//     W: string;
+//   };
+// };
+
 const orientationMapper: any = {
   R: {
     N: 'E',
@@ -72,7 +83,7 @@ export const hasScent = (
   currentX: number,
   currentY: number,
   scentList: Array<Coordinates>,
-) =>
+): any =>
   scentList.find(
     ({ x, y }: Coordinates) => x === currentX && y === currentY,
   );
