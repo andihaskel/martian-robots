@@ -4,9 +4,20 @@ type Coordinates = {
 };
 
 type Orientation = 'R' | 'L';
-type Direction = 'N' | 'E' | 'S' | 'W' | 'default';
-type MovementCoordinates = {
-  [key in Direction]: () => Coordinates | Error;
+
+type MovementMapper = {
+  [key in string]: Function;
 };
 
-export { Coordinates, Orientation, Direction, MovementCoordinates };
+type OrientationMapper = {
+  [key in string]: {
+    [key in string]: string;
+  };
+};
+
+export {
+  Coordinates,
+  Orientation,
+  MovementMapper,
+  OrientationMapper,
+};

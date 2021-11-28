@@ -1,6 +1,6 @@
 import * as types from './types';
 
-const orientationMapper: any = {
+const orientationMapper: types.OrientationMapper = {
   R: {
     N: 'E',
     E: 'S',
@@ -50,7 +50,7 @@ export const getMovementCoordinates = (
   currentY: number,
   currentOrientation: string,
 ): types.Coordinates => {
-  let coordinates: any = {
+  let coordinates: types.MovementMapper = {
     N: () => ({ x: currentX, y: currentY + 1 }),
     S: () => ({ x: currentX, y: currentY - 1 }),
     E: () => ({ x: currentX + 1, y: currentY }),
