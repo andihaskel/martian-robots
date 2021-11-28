@@ -1,15 +1,12 @@
 import { Coordinates } from './interfaces';
 
-// type Orientation = 'R' | 'L';
-
-// type IOrientationMapper = {
-//   [key in Orientation]?: {
-//     N: string;
-//     E: string;
-//     S: string;
-//     W: string;
-//   };
-// };
+type Orientation = 'R' | 'L';
+type Direction = 'N' | 'E' | 'S' | 'W';
+type IOrientationMapper = {
+  [key in Orientation]: {
+    [key in Direction]: string;
+  };
+};
 
 const orientationMapper: any = {
   R: {
@@ -29,14 +26,14 @@ const orientationMapper: any = {
 export const orientate = (
   currentOrientation: string,
   instruction: string,
-): any => orientationMapper[instruction][currentOrientation];
+): string => orientationMapper[instruction][currentOrientation];
 
 export const fallOfMars = (
   currentX: number,
   currentY: number,
   upperRightCoordinates: Coordinates,
   currentOrientation: string,
-) => {
+): boolean => {
   const { x: worldLimitX, y: worldLimitY } = upperRightCoordinates;
 
   const simulatedCoordinates = getMovementCoordinates(
@@ -60,7 +57,7 @@ export const getMovementCoordinates = (
   currentX: number,
   currentY: number,
   currentOrientation: string,
-): any => {
+): Coordinates => {
   let coordinates;
   switch (currentOrientation) {
     case 'N':
@@ -75,6 +72,8 @@ export const getMovementCoordinates = (
     case 'W':
       coordinates = { x: currentX - 1, y: currentY };
       break;
+    default:
+      throw new Error('Invalid Orientation');
   }
   return coordinates;
 };
@@ -83,7 +82,7 @@ export const hasScent = (
   currentX: number,
   currentY: number,
   scentList: Array<Coordinates>,
-): any =>
+): Coordinates | undefined =>
   scentList.find(
     ({ x, y }: Coordinates) => x === currentX && y === currentY,
   );
