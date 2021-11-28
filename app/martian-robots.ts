@@ -4,7 +4,7 @@ import {
   hasScent,
   orientate,
 } from './helper';
-import { Coordinates } from './interfaces';
+import { Coordinates } from './types';
 
 let currentX: number;
 let currentY: number;
@@ -15,7 +15,7 @@ export const martianRobots = (
   upperRightCoordinates: Coordinates,
   initialPosition: string,
   instructions: string,
-) => {
+): string => {
   let stopReadingInstructions = false;
   currentX = parseInt(initialPosition.split(' ')[0], 10);
   currentY = parseInt(initialPosition.split(' ')[1], 10);
@@ -65,11 +65,6 @@ export const martianRobots = (
     }
     if (stopReadingInstructions) break;
   }
-  console.log(
-    `x: ${currentX} y: ${currentY} orientation ${currentOrientation}`,
-  );
+
   return `X: ${currentX} Y: ${currentY} orientation ${currentOrientation}`;
 };
-
-martianRobots({ x: 5, y: 3 }, '4 2 E', 'FFFF');
-// martianRobots({ x: 5, y: 3 }, '4 2 E', 'FFFLFLF');

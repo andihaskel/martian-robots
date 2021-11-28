@@ -1,14 +1,14 @@
 import { martianRobots } from '../app/martian-robots';
 jest.useFakeTimers('legacy');
 describe('Martian Robots', () => {
-  it('should be ok', (done) => {
+  it('should move successfully', (done) => {
     const res = martianRobots({ x: 5, y: 3 }, '1 1 E', 'RFRFRFRF');
 
     expect(res).toBe('X: 1 Y: 1 orientation E');
     done();
   });
 
-  it('should be lost', (done) => {
+  it('should get lost', (done) => {
     const res = martianRobots(
       { x: 5, y: 3 },
       '3 2 N',
@@ -27,7 +27,7 @@ describe('Martian Robots', () => {
     done();
   });
 
-  it('should be lost because coordinates are out of mars', (done) => {
+  it('should get lost because coordinates are out of mars', (done) => {
     const res = martianRobots(
       { x: 5, y: 3 },
       '-1 -1 W',
@@ -38,9 +38,16 @@ describe('Martian Robots', () => {
     done();
   });
 
-  it('should fail because of initial position is invalid', (done) => {
+  it('should fail because initial position is invalid', (done) => {
     expect(() =>
       martianRobots({ x: 5, y: 3 }, '-1 -1', 'LLFFFLFLFL'),
+    ).toThrowError();
+    done();
+  });
+
+  it('should fail because orientation is invalid', (done) => {
+    expect(() =>
+      martianRobots({ x: 5, y: 3 }, '-1 -1 J', 'LLFFFLFLFL'),
     ).toThrowError();
     done();
   });
