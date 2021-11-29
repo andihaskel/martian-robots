@@ -3,7 +3,7 @@ import * as types from './types';
 let currentX: number;
 let currentY: number;
 let currentOrientation: string;
-let scentList: Array<types.Coordinates> = [];
+const scentList: Array<types.Coordinates> = [];
 
 const orientationMapper: types.OrientationMapper = {
   R: {
@@ -42,7 +42,6 @@ const getSingleRobotFinalCoordinates = (
   instructions: string,
 ): string => {
   let stopReadingInstructions = false;
-
   currentX = parseInt(initialPosition.split(' ')[0], 10);
   currentY = parseInt(initialPosition.split(' ')[1], 10);
   currentOrientation = initialPosition.split(' ')[2];
@@ -60,11 +59,11 @@ const getSingleRobotFinalCoordinates = (
     switch (instruction) {
       case instructionTypes.Right:
       case instructionTypes.Left:
-        currentOrientation = orientate(currentOrientation, instruction);
+        orientate(currentOrientation, instruction);
         break;
       case instructionTypes.Forward:
-        let isLost = moveForward(upperRightCoordinates, scentList);
-        if (isLost) stopReadingInstructions = true;
+        moveForward(upperRightCoordinates, scentList);
+        if (currentOrientation.includes('LOST')) stopReadingInstructions = true;
         break;
 
       default:
@@ -73,11 +72,12 @@ const getSingleRobotFinalCoordinates = (
     if (stopReadingInstructions) break;
   }
 
-  return `X: ${currentX} Y: ${currentY} orientation ${currentOrientation}`;
+  return `${currentX} ${currentY} ${currentOrientation}`;
 };
 
-const orientate = (currentOrientation: string, instruction: string): string =>
-  orientationMapper[instruction][currentOrientation];
+const orientate = (orientationToOrientate: string, instruction: string): void => {
+  currentOrientation = orientationMapper[instruction][orientationToOrientate];
+};
 
 const isMovingOutOfBounds = (
   currentX: number,
@@ -117,24 +117,20 @@ const hasScent = (
   currentX: number,
   currentY: number,
   scentList: Array<types.Coordinates>,
-): types.Coordinates | undefined =>
-  scentList.find(({ x, y }: types.Coordinates) => x === currentX && y === currentY);
+): types.Coordinates | undefined => scentList.find(({ x, y }: types.Coordinates) => x === currentX && y === currentY);
 
 const moveForward = (
   upperRightCoordinates: types.Coordinates,
   scentList: Array<types.Coordinates>,
-): boolean => {
-  let isLost = false;
+): void => {
   if (isMovingOutOfBounds(currentX, currentY, upperRightCoordinates, currentOrientation)) {
     if (!hasScent(currentX, currentY, scentList)) {
       scentList.push({ x: currentX, y: currentY });
       currentOrientation = `${currentOrientation} LOST`;
-      isLost = true;
     }
   } else {
     const coordinates = getMovementCoordinates(currentX, currentY, currentOrientation);
     currentX = coordinates?.x;
     currentY = coordinates?.y;
   }
-  return isLost;
 };

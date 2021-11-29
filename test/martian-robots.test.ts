@@ -6,7 +6,7 @@ describe('Martian Robots', () => {
       { position: '1 1 E', instruction: 'RFRFRFRF' },
     ]);
 
-    expect(res[0]).toBe('X: 1 Y: 1 orientation E');
+    expect(res[0]).toBe('1 1 E');
     done();
   });
 
@@ -15,7 +15,7 @@ describe('Martian Robots', () => {
       { position: '3 2 N', instruction: 'FRRFLLFFRRFLL' },
     ]);
 
-    expect(res[0]).toBe('X: 3 Y: 3 orientation N LOST');
+    expect(res[0]).toBe('3 3 N LOST');
     done();
   });
 
@@ -26,7 +26,7 @@ describe('Martian Robots', () => {
     ]);
 
     const [, secondRobot] = res;
-    expect(secondRobot).toBe('X: 2 Y: 3 orientation S');
+    expect(secondRobot).toBe('2 3 S');
     done();
   });
 
@@ -35,7 +35,7 @@ describe('Martian Robots', () => {
       { position: '-1 -1 W', instruction: 'FFFLFLFL' },
     ]);
 
-    expect(res[0]).toBe('X: -1 Y: -1 orientation W LOST');
+    expect(res[0]).toBe('-1 -1 W LOST');
     done();
   });
 
