@@ -3,8 +3,6 @@ type Coordinates = {
   y: number;
 };
 
-type Orientation = 'R' | 'L';
-
 type MovementMapper = {
   [key in string]: Function;
 };
@@ -15,9 +13,4 @@ type OrientationMapper = {
   };
 };
 
-export {
-  Coordinates,
-  Orientation,
-  MovementMapper,
-  OrientationMapper,
-};
+export { Coordinates, MovementMapper, OrientationMapper };

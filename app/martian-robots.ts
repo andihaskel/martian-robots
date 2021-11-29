@@ -11,6 +11,12 @@ let currentY: number;
 let currentOrientation: string;
 let scentList: Array<Coordinates> = [];
 
+enum instructionTypes {
+  right = 'R',
+  left = 'L',
+  forward = 'F',
+}
+
 export const martianRobots = (
   upperRightCoordinates: Coordinates,
   initialPosition: string,
@@ -31,14 +37,14 @@ export const martianRobots = (
 
   for (let instruction of instructions.split('')) {
     switch (instruction) {
-      case 'R':
-      case 'L':
+      case instructionTypes.right:
+      case instructionTypes.left:
         currentOrientation = orientate(
           currentOrientation,
           instruction,
         );
         break;
-      case 'F':
+      case instructionTypes.forward:
         if (
           fallOfMars(
             currentX,
