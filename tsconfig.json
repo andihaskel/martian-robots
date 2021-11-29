@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "strictPropertyInitialization": false
+  },
+  "exclude": ["node_modules"]
+}
