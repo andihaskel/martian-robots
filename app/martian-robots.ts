@@ -1,11 +1,15 @@
 import * as types from './types';
 
+enum instructionTypes {
+  Right = 'R',
+  Left = 'L',
+  Forward = 'F',
+}
 export class MartianRobots {
   private currentX: number;
   private currentY: number;
   private currentOrientation: string;
   private scentList: Array<types.Coordinates> = [];
-
   private orientationMapper: types.OrientationMapper = {
     R: {
       N: 'E',
@@ -26,7 +30,7 @@ export class MartianRobots {
     initialPositionsAndInstructions: Array<types.initialPositionsAndInstructions>,
   ) => {
     const robotsFinalCoordinates = [];
-    for (let i = 0; i < initialPositionsAndInstructions.length; i++) {
+    for (let i = 0; i < initialPositionsAndInstructions.length; i += 1) {
       const finalCoordinate = this.getSingleRobotFinalCoordinates(
         upperRightCoordinates,
         initialPositionsAndInstructions[i].position,
@@ -46,11 +50,6 @@ export class MartianRobots {
     this.currentX = parseInt(initialPosition.split(' ')[0], 10);
     this.currentY = parseInt(initialPosition.split(' ')[1], 10);
     this.currentOrientation = initialPosition.split(' ')[2];
-    enum instructionTypes {
-      Right = 'R',
-      Left = 'L',
-      Forward = 'F',
-    }
 
     if (this.currentOrientation == null || this.currentX == null || this.currentY == null) {
       throw new Error('Invalid initial position input. Missing parameters');
@@ -122,8 +121,7 @@ export class MartianRobots {
     currentX: number,
     currentY: number,
     scentList: Array<types.Coordinates>,
-  ): types.Coordinates | undefined =>
-    scentList.find(({ x, y }: types.Coordinates) => x === currentX && y === currentY);
+  ): types.Coordinates | undefined => scentList.find(({ x, y }: types.Coordinates) => x === currentX && y === currentY);
 
   private moveForward = (
     upperRightCoordinates: types.Coordinates,

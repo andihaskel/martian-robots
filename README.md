@@ -1,11 +1,11 @@
-# Martial Robots 🌌
+# Martian Robots 🌌
 
 **Instructions**
 
-1. Install dependencies by executing `npm install`
-2. Run tests by executing `npm run test`
-3. Get code coverage by executing `npm run test-coverage`
-4. Run linter by executing `npm run linter`
+- Install dependencies by executing `npm install`
+- Run tests by executing `npm run test`
+- Get code coverage by executing `npm run test-coverage`
+- Run linter by executing `npm run linter`
 
 **Note:**
 The given example cases are covered in the unit tests.

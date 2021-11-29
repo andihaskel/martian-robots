@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+
 type Coordinates = {
   x: number;
   y: number;
