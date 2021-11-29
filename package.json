@@ -21,7 +21,9 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "ts-node app/martian-robots.ts"
+    "test-coverage": "jest --coverage",
+    "start": "ts-node app/martian-robots.ts",
+    "linter": "eslint app/*.ts"
   },
   "author": "Andres Haskel",
   "license": "ISC"
