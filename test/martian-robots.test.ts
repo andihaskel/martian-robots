@@ -1,8 +1,10 @@
-import { getRobotsFinalCoordinates } from '../app/martian-robots';
+import { MartianRobots } from '../app/martian-robots';
 jest.useFakeTimers('legacy');
 describe('Martian Robots', () => {
+  const martianRobots = new MartianRobots();
+
   it('should move successfully', (done) => {
-    const res = getRobotsFinalCoordinates({ x: 5, y: 3 }, [
+    const res = martianRobots.getRobotsFinalCoordinates({ x: 5, y: 3 }, [
       { position: '1 1 E', instruction: 'RFRFRFRF' },
     ]);
 
@@ -11,7 +13,7 @@ describe('Martian Robots', () => {
   });
 
   it('should get lost', (done) => {
-    const res = getRobotsFinalCoordinates({ x: 5, y: 3 }, [
+    const res = martianRobots.getRobotsFinalCoordinates({ x: 5, y: 3 }, [
       { position: '3 2 N', instruction: 'FRRFLLFFRRFLL' },
     ]);
 
@@ -20,7 +22,7 @@ describe('Martian Robots', () => {
   });
 
   it('should smell scent and not fall', (done) => {
-    const res = getRobotsFinalCoordinates({ x: 5, y: 3 }, [
+    const res = martianRobots.getRobotsFinalCoordinates({ x: 5, y: 3 }, [
       { position: '3 2 N', instruction: 'FRRFLLFFRRFLL' },
       { position: '0 3 W', instruction: 'LLFFFLFLFL' },
     ]);
@@ -31,7 +33,7 @@ describe('Martian Robots', () => {
   });
 
   it('should not be able to move forward because initial coordinates are out of mars', (done) => {
-    const res = getRobotsFinalCoordinates({ x: 5, y: 3 }, [
+    const res = martianRobots.getRobotsFinalCoordinates({ x: 5, y: 3 }, [
       { position: '-1 -1 W', instruction: 'FFFLFLFL' },
     ]);
 
@@ -41,21 +43,27 @@ describe('Martian Robots', () => {
 
   it('should fail because initial position input is invalid', (done) => {
     expect(() =>
-      getRobotsFinalCoordinates({ x: 5, y: 3 }, [{ position: '-1 -1', instruction: 'LLFFFLFLFL' }]),
+      martianRobots.getRobotsFinalCoordinates({ x: 5, y: 3 }, [
+        { position: '-1 -1', instruction: 'LLFFFLFLFL' },
+      ]),
     ).toThrowError('Invalid initial position input. Missing parameters');
     done();
   });
 
   it('should fail because orientation is invalid', (done) => {
     expect(() =>
-      getRobotsFinalCoordinates({ x: 5, y: 3 }, [{ position: '1 1 J', instruction: 'LLFFFLFLFL' }]),
+      martianRobots.getRobotsFinalCoordinates({ x: 5, y: 3 }, [
+        { position: '1 1 J', instruction: 'LLFFFLFLFL' },
+      ]),
     ).toThrowError('invalid Orientation');
     done();
   });
 
   it('should fail because contains an invalid instruction', (done) => {
     expect(() =>
-      getRobotsFinalCoordinates({ x: 5, y: 3 }, [{ position: '1 1 E', instruction: 'G' }]),
+      martianRobots.getRobotsFinalCoordinates({ x: 5, y: 3 }, [
+        { position: '1 1 E', instruction: 'G' },
+      ]),
     ).toThrowError('invalid instruction');
     done();
   });
