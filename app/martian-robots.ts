@@ -6,7 +6,7 @@ enum instructionTypes {
   Forward = 'F',
 }
 export class MartianRobots {
-  currentX: number;
+  private currentX: number;
   private currentY: number;
   private currentOrientation: string;
   private scentList: Array<types.Coordinates> = [];
